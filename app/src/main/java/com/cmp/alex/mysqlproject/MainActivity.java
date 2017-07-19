@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     ListView userList;
-    TextView header;
+//    TextView header;
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
     Cursor userCursor;
