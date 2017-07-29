@@ -18,6 +18,7 @@
             <!--</application>-->
         </activity>
         <activity android:name=".UserActivity"></activity>
+      <activity android:name=".FavorActivity"></activity>
 
     </application>
 
