@@ -3,6 +3,8 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:orientation="horizontal"
+  android:descendantFocusability="blocksDescendants"
+
   >
 
   <LinearLayout
@@ -40,8 +42,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="jmi"
-    android:focusable="false"
-    android:visibility="visible"
+
     />
 
 

@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -22,8 +23,9 @@ public class MainActivity extends AppCompatActivity {
   ListView userList;
   DatabaseHelper databaseHelper;
   SQLiteDatabase db;
-  Cursor userCursor, myFlag;
+  Cursor userCursor, myFlag,buttonCursor;
   SimpleCursorAdapter userAdapter;
+  MyCursorAdapter newAdapter;
   private static final String TAG = "myLogs";
   int firstMain, myId = 0;
 
@@ -31,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    final Button justButton = (Button) findViewById(R.id.button2);
 
     userList = (ListView) findViewById(R.id.list);
     userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -40,8 +41,9 @@ public class MainActivity extends AppCompatActivity {
           final long id) {
         final Button myButton = (Button) view.findViewById(R.id.button2);
 //        myButton.setVisibility(View.VISIBLE);
-
-        myButton.setOnClickListener(new View.OnClickListener() {
+//
+newAdapter.setSelectedPosition(position);
+        myButton.setOnClickListener(new OnClickListener() {
           @Override
           public void onClick(View v) {
 //            Log.d(TAG, "по id определяем кнопку, вызвавшую этот обработчик");
@@ -98,11 +100,27 @@ public class MainActivity extends AppCompatActivity {
     userCursor = db.rawQuery("select * from " + DatabaseHelper.TABLE, null);
     // определяем, какие столбцы из курсора будут выводиться в ListView
     String[] headers = new String[]{DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_YEAR,
-        DatabaseHelper.COLUMN_TRNS};
+        DatabaseHelper.COLUMN_TRNS, DatabaseHelper.COLUMN_FLAG};
     // создаем адаптер, передаем в него курсор
-    userAdapter = new SimpleCursorAdapter(this, R.layout.item,
-        userCursor, headers, new int[]{R.id.text1, R.id.text2, R.id.text3}, 0);
-    userList.setAdapter(userAdapter);
+    newAdapter = new MyCursorAdapter(this, R.layout.item,
+        userCursor, headers, new int[]{R.id.text1, R.id.text2, R.id.text3, R.id.button2}, 0);
+    userList.setAdapter(newAdapter);
+
+
+//    buttonCursor=db.rawQuery("select * from " + DatabaseHelper.TABLE + " where " +
+//        DatabaseHelper.COLUMN_FLAG + "=?", new String[]{String.valueOf(id)});
+//    final Button justButton = (Button) findViewById(R.id.button2);
+//
+//    while(buttonCursor.moveToFirst()){
+//      int temp;
+//      temp=buttonCursor.getInt(0);
+//      if(temp==0){
+//      justButton.setText("NO");
+//    }else {
+//        justButton.setText("YES");
+//      }
+//    }
+//    buttonCursor.close();
   }
 
   // по нажатию на кнопку запускаем UserActivity для добавления данных
